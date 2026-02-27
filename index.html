@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LoveSovereignty | 因果终端</title>
+    <title>LoveSovereignty | 因果律动终端</title>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;600;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #FFFDFB; --ink: #2C2C2C; --dim: #A6A6A6; --trace: #E8D3B9; --accent: #E5989B; --heart: #FFB4B4; }
@@ -51,7 +51,7 @@
         .sub-hint { font-size: 12px; color: var(--dim); font-style: italic; line-height: 1.8; border-top: 1px solid #F5F5F5; padding-top: 12px; }
         .tag { position: absolute; top: 30px; left: 30px; font-size: 10px; letter-spacing: 2px; color: var(--trace); font-weight: 900; }
 
-        /* 手机端自适应补丁 (LoveSovereignty 专用) */
+        /* 手机端自适应 */
         @media (max-width: 850px) {
             body { overflow-y: auto; display: block; }
             .app-shell { display: block; height: auto; }
@@ -60,7 +60,7 @@
             .orb-container { width: 320px; height: 320px; }
             .prob-text { font-size: 80px; }
             .header { font-size: 24px; text-align: center; }
-            .slider-bar::-webkit-slider-thumb { width: 26px; height: 26px; } /* 增加手机触控感 */
+            .slider-bar::-webkit-slider-thumb { width: 26px; height: 26px; }
             .tag { top: 20px; left: 20px; font-size: 8px; }
         }
     </style>
@@ -77,12 +77,12 @@
 
         <div class="input-area">
             <label class="label-zen">当下之种 (Kinetics)</label>
-            <div class="input-wrap"><textarea id="pre-action" placeholder="魏珏然，此刻正在执行什么具体的物理动作？" oninput="Engine.calc()"></textarea></div>
+            <div class="input-wrap"><textarea id="pre-action" placeholder="此刻正在执行什么具体的物理动作？" oninput="Engine.calc()"></textarea></div>
         </div>
 
         <div class="input-area">
             <label class="label-zen">视界锚点 (Vision)</label>
-            <div class="input-wrap"><textarea id="wish-desc" placeholder="描述 LoveSovereignty 达成的共振场景..." oninput="Engine.calc()"></textarea></div>
+            <div class="input-wrap"><textarea id="wish-desc" placeholder="描述此愿达成时的共振场景..." oninput="Engine.calc()"></textarea></div>
         </div>
         
         <div class="meta-row">
@@ -94,7 +94,7 @@
     </aside>
 
     <main class="stage">
-        <div class="tag">LOVESOVEREIGNTY_V5.3_DEPLOYED</div>
+        <div class="tag">LOVESOVEREIGNTY_V5.3_PRO</div>
         <div class="orb-container">
             <div id="wave" class="fill-layer"></div>
             <div id="prob" class="prob-text">0%</div>
@@ -146,7 +146,6 @@ const Engine = {
         this.calc(); 
     },
     calc() {
-        // 1. 基础权重 (映射至 85% 基准)
         let baseScore = 0;
         Matrix.forEach(m => {
             let sum = 0;
@@ -154,11 +153,9 @@ const Engine = {
             baseScore += (sum / m.fields.length / 5) * m.weight * 0.85; 
         });
 
-        // 2. 环境慈悲非线性系数
         const ext = parseFloat(document.getElementById('ext-dep').value) || 0;
         const mercyFactor = 0.75 + (ext / 5) * 0.3; 
 
-        // 3. 动能阶梯增益 (Kinetics)
         const pre = document.getElementById('pre-action').value.trim();
         const wish = document.getElementById('wish-desc').value.trim();
         let bonus = 0;
@@ -166,13 +163,10 @@ const Engine = {
         if (pre.length > 25) bonus += 6;
         if (pre.length > 70) bonus += 10;
         
-        // 核心修正：主权耦合算法
         let p = (baseScore + bonus) * mercyFactor;
 
-        // 4. Lovesovereignty 主权特权 (Vision)
         if (/爱|共振|陪伴|温暖|sovereignty/i.test(wish) && pre.length > 10) p += 5.5;
 
-        // 边界保护
         p = Math.max(1, Math.min(99.4, p));
         const finalP = p.toFixed(1);
 
@@ -186,7 +180,7 @@ const Engine = {
         const zen = document.getElementById('zen');
 
         if (p > 88) {
-            info.innerText = "“主权完全确立。魏珏然，请收割你的现实。”";
+            info.innerText = "“主权完全确立。请收割当下的现实。”";
             zen.innerText = "因果圆满";
         } else if (p > 65) {
             info.innerText = "“高频震荡期。爱与主权正在深度同调。”";
@@ -195,7 +189,7 @@ const Engine = {
             info.innerText = "“蓄能中。增加物理践行深度以维持频率。”";
             zen.innerText = "春雨细润";
         } else {
-            info.innerText = "“念力尚未具象。请给 LoveSovereignty 更多滋养。”";
+            info.innerText = "“念力尚未具象。请给予更多具体的滋养。”";
             zen.innerText = "潜龙在渊";
         }
 
@@ -204,7 +198,7 @@ const Engine = {
             return { n: m.name, a: s/m.fields.length };
         }).sort((a,b) => a.a - b.a)[0];
 
-        hint.innerText = `主权提示：当前瓶颈位于「${low.n}」，该维度的缺失正限制因果坍缩。`;
+        hint.innerText = `系统提示：当前瓶颈位于「${low.n}」，该维度的缺失正限制因果坍缩。`;
     }
 };
 
